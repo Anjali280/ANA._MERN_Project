@@ -1,4 +1,5 @@
 import React from "react";
+import { Search } from "@mui/icons-material";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -13,6 +14,13 @@ const Wrapper = styled.div`
 const Left = styled.div`
   flex: 1;
 `;
+const SearchContainer = styled.div`
+  border: 1px solid lightgray;
+`;
+const Language = styled.div`
+  font-size: 14px;
+  cursor: pointer;
+`;
 const Right = styled.div`
   flex: 1;
 `;
@@ -25,10 +33,10 @@ export default function Navbar() {
     <Container>
       <Wrapper>
         <Left>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-          nihil, provident, laborum blanditiis laudantium fugit, non corrupti
-          esse eius ratione quisquam tempore voluptas ea? Adipisci cum
-          repellendus neque dolore vel!
+          <Language>EN</Language>
+          <SearchContainer>
+            input <Search />
+          </SearchContainer>
         </Left>
         <Center>Center</Center>
         <Right>Right</Right>
