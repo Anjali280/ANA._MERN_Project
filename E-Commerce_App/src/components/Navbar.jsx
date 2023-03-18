@@ -6,9 +6,9 @@ import { Badge } from "@mui/material";
 const Container = styled.div`
   height: 60px;
 `;
-//changes done in padding 1px it was 10px before
+
 const Wrapper = styled.div`
-  padding: 1px 20px;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -63,7 +63,7 @@ const MenuItems = styled.div`
 export default function Navbar() {
   return (
     <Container>
-      <Wrapper style={{ backgroundColor: "pink" }}>
+      <Wrapper style={{ backgroundColor: "  #fcdbe0" }}>
         <Left>
           <Language>EN</Language>
           <SearchContainer>
@@ -80,7 +80,7 @@ export default function Navbar() {
           <MenuItems>REGISTER</MenuItems>
           <MenuItems>SIGN IN</MenuItems>
           <MenuItems>
-            <Badge badgeContent={4} color="primary">
+            <Badge badgeContent={1} color="primary">
               <ShoppingCartOutlined />
             </Badge>
           </MenuItems>
