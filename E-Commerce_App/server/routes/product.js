@@ -54,7 +54,7 @@ router.get("/find/:id", async (req, res) => {
   }
 });
 
-//GET ALL PRODUCTS by Admin as well as the user
+//GET ALL PRODUCTS by Admin as well as the user .....category not working
 router.get("/", async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
