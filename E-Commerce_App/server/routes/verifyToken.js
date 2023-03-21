@@ -16,7 +16,9 @@ const verifyToken = (req, res, next) => {
       }
     });
   } else {
-    return res.status(401).json("You are not authenticated!");
+    return res
+      .status(401)
+      .json("You are not authenticated! (Doesnt have a token)");
   }
 };
 
@@ -29,4 +31,20 @@ const verifyTokenAndAuthorization = (req, res, next) => {
     }
   });
 };
-module.exports = { verifyToken, verifyTokenAndAuthorization };
+
+const verifyTokenAndAdmin = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      res
+        .status(403)
+        .json("You are not alowed to do that because you are not ADMIN!");
+    }
+  });
+};
+module.exports = {
+  verifyToken,
+  verifyTokenAndAdmin,
+  verifyTokenAndAuthorization,
+};
