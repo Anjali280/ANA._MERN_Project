@@ -36,7 +36,11 @@ router.post("/login", async (req, res) => {
       username: req.body.username,
     });
     console.log(findUser);
-    !findUser && res.status(401).json("Entered Wrong Username");
+    // !findUser && res.status(401).json("Entered Wrong Username");
+
+    if (!findUser) {
+      return res.status(401).json("Entered Wrong Username");
+    }
 
     /*For finding the correct password*/
     const hashedPassword = CryptoJS.AES.decrypt(
@@ -45,11 +49,11 @@ router.post("/login", async (req, res) => {
     );
 
     const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
-
     const inputPassword = req.body.password;
 
-    originalPassword != inputPassword &&
-      res.status(401).json("Entered Wrong Password");
+    if (originalPassword != inputPassword) {
+      return res.status(401).json("Entered Wrong Password");
+    }
 
     // let key = process.env.JWT_SECRECT_KEY;
     // let data = {
