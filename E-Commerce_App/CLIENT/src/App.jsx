@@ -5,9 +5,10 @@ import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import { Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
-  const isLoggedIn = true;
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <div className="App">
       <Routes>
@@ -15,13 +16,10 @@ function App() {
         <Route path="/productList/:category" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        <Route
-          path="/login"
-          element={isLoggedIn ? <Navigate to="/" /> : <Login />}
-        />
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route
           path="/register"
-          element={isLoggedIn ? <Navigate to="/" /> : <Register />}
+          element={user ? <Navigate to="/" /> : <Register />}
         />
       </Routes>
     </div>
