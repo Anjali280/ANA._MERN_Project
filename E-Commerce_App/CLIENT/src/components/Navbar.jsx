@@ -3,6 +3,8 @@ import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import styled from "styled-components";
 import { Badge } from "@mui/material";
 import { mobile } from "../responsive";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -70,6 +72,8 @@ const MenuItems = styled.div`
 //added background color to wrapper and added fontsize and marginleft to search style={{ backgroundColor: "  #fcdbe0" }}
 
 export default function Navbar() {
+  const quantity = useSelector((state) => state.cart.quantity);
+  console.log(quantity);
   return (
     <Container>
       <Wrapper>
@@ -88,11 +92,13 @@ export default function Navbar() {
         <Right>
           <MenuItems>REGISTER</MenuItems>
           <MenuItems>SIGN IN</MenuItems>
-          <MenuItems>
-            <Badge badgeContent={1} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
-          </MenuItems>
+          <Link to="/cart">
+            <MenuItems>
+              <Badge badgeContent={quantity} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </MenuItems>
+          </Link>
         </Right>
       </Wrapper>
     </Container>
