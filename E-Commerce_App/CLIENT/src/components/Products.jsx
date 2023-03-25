@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../data";
+// import { popularProducts } from "../data";
 import Product from "./Product";
 
 const Container = styled.div`
@@ -18,21 +18,53 @@ const Products = ({ category, filters, sort }) => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const url = await fetch("http://localhost:5000/api/product");
+        const url = await fetch(
+          category
+            ? `http://localhost:5000/api/product?category=${category}`
+            : "http://localhost:5000/api/product"
+        );
         const res = await url.json();
         console.log(res);
+        setProducts(res);
       } catch (err) {
-        console.log("Error in fetching");
+        console.log("Error in fetching Data");
       }
     };
     getProducts();
   }, [category]);
 
+  useEffect(() => {
+    category &&
+      setFilteredProducts(
+        products.filter((item) =>
+          Object.entries(filters).every(([key, value]) =>
+            item[key].includes(value)
+          )
+        )
+      );
+  }, [products, category, filters]);
+
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sort === "asc") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.price - b.price)
+      );
+    } else {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => b.price - a.price)
+      );
+    }
+  }, [sort]);
+
   return (
     <Container>
-      {popularProducts.map((item) => (
-        <Product item={item} key={item.id} />
-      ))}
+      {category
+        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+        : products.map((item) => <Product item={item} key={item.id} />)}
     </Container>
   );
 };
