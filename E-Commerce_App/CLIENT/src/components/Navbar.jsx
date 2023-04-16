@@ -90,8 +90,12 @@ export default function Navbar() {
           <Logo>ANA.</Logo>
         </Center>
         <Right>
-          <MenuItems>REGISTER</MenuItems>
-          <MenuItems>SIGN IN</MenuItems>
+          <Link to="/register">
+            <MenuItems>REGISTER</MenuItems>
+          </Link>
+          <Link to="/login">
+            <MenuItems>SIGN IN</MenuItems>
+          </Link>
           <Link to="/cart">
             <MenuItems>
               <Badge badgeContent={quantity} color="primary">

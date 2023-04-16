@@ -55,13 +55,6 @@ router.post("/login", async (req, res) => {
       return res.status(401).json("Entered Wrong Password");
     }
 
-    // let key = process.env.JWT_SECRECT_KEY;
-    // let data = {
-    //   user_id: findUser.username,
-    // };
-    // console.log(key);
-
-    // const accessToken = jwt.sign(data, key);
     const accessToken = jwt.sign(
       {
         id: findUser._id,

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,22 +57,78 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [formFields, setFormFields] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confpassword: "",
+  });
+  const { username, email, password, confpassword } = formFields;
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormFields({ ...formFields, [name]: value });
+  };
+
+  const registerUser = async (event) => {
+    event.preventDefault();
+    if (password !== confpassword) {
+      alert("new and confirm password do not match");
+      return;
+    }
+    const url = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const res = await url.json();
+    console.log(res);
+    alert("Registration Successful");
+    navigate("/login");
+  };
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+          <Input
+            placeholder="username"
+            name="username"
+            value={username}
+            onChange={handleChange}
+          />
+          <Input
+            placeholder="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+          <Input
+            placeholder="password"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+          <Input
+            placeholder="confirm password"
+            type="password"
+            name="confpassword"
+            value={confpassword}
+            onChange={handleChange}
+          />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button onClick={registerUser}>CREATE</Button>
         </Form>
       </Wrapper>
     </Container>
